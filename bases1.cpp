@@ -43,9 +43,9 @@ double rk4(double x0,double y0,double z0) {
   double k2 = step * ff(x0 + 0.5*k1, y0 + 0.5*l1, z0 + 0.5*m1);
   double l2 = step * gg(x0 + 0.5*k1, y0 + 0.5*l1, z0 + 0.5*m1);
   double m2 = step * hh(x0 + 0.5*k1, y0 + 0.5*l1, z0 + 0.5*m1);
-  double k3 = step * ff(x0 + 0.5*k2, y0 + 0.5*l2, z0 + 0.5*m2);
-  double l3 = step * gg(x0 + 0.5*k2, y0 + 0.5*l2, z0 + 0.5*m2);
-  double m3 = step * hh(x0 + 0.5*k2, y0 + 0.5*l2, z0 + 0.5*m2);
+  double k3 = step * ff(x0 + k2, y0 + l2, z0 + m2);
+  double l3 = step * gg(x0 + k2, y0 + l2, z0 + m2);
+  double m3 = step * hh(x0 + k2, y0 + l2, z0 + m2);
 
   ecuacion.x0 += (1./6)*(k0 + 2*k1 + 2*k2 + k3);
   ecuacion.y0 += (1./6)*(l0 + 2*l1 + 2*l2 + l3);
