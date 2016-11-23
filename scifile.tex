@@ -1,10 +1,10 @@
 \documentclass[letterpaper, 12pt]{article}
 
 
-\usepackage{scicite}
 \usepackage{amsmath}
 \usepackage{ragged2e}
 \usepackage{graphicx}
+\usepackage{pdfpages}
 
 \topmargin 0.0cm
 \oddsidemargin 0.2cm
@@ -54,19 +54,7 @@
 \centering\normalsize{Programaci\'on e Introducci\'on a los M\'etodos Num\'ericos}\\
 \centering\normalsize{\{$^{1}$lmduquev, $^{2}$ldeld, $^{3}$jfreyesb\}@unal.edu.co\\
 
-
-
-
-
-
-%%%%%%%%%%%%%%%%% END OF PREAMBLE %%%%%%%%%%%%%%%%
-
-
-
 \baselineskip18pt
-
-
-
 
 
 
@@ -99,14 +87,38 @@ El sistema se expresa de la siguiente forma:
 Donde $X$ es la velocidad de la corriente de convección, $Y$ es proporcional a la diferencia de temperatura entre  corrientes de convección ascendetes y descendentes y $Z$ es la desviación de la temperaratura respecto a la dependencia lineal de la altura. Este sistema es de gran interés matemático pues para ciertos valores de los parámetros muestra un comportamiento caótico con un atractor conocido como "\textit{Mariposa de Lorenz}". 
 
 
-\section*{Programación}
+\section*{Programaci\'on}
 
 \justify
-El programa implementado para aproximar las soluciones del sistema de Lorenz consiste en 5 funciones y una estructura, e imprime los valores sucesivos de $X$, $Y$, y $Z$ cada $10^{-4}$ segundos en un rango de tiempo de 0 a 50. En primer lugar, se declara una estructura con tres variables \textit{double} $x_0$, $y_0$, y $z_0$ que representan los valores de las ecuaciones en un tiempo $t$. En seguida, implementamos tres funciones \textit{ff, gg} y \textit{hh}, una para cada ecuación diferencial del sistema de Lorenz. Usamos los siguientes valores para los parámetros del sistema: $\sigma = 10$, $\rho = \frac{8}{3}$, $\beta = 28$. 
+El programa implementado para aproximar las soluciones del sistema de Lorenz consiste en 5 funciones y una estructura, e imprime los valores sucesivos de $X$, $Y$, y $Z$ cada $10^{-4}$ segundos en un rango de tiempo de 0 a 50. En primer lugar, se declara una estructura con tres variables \textit{double} $x_0$, $y_0$, y $z_0$ que representan los valores de las ecuaciones en un tiempo $t$:\\
+\begin{center}
+\includegraphics{estructura.png}\\
+\end{center}
+ En seguida, implementamos tres funciones \textit{ff, gg} y \textit{hh}, una para cada ecuación diferencial del sistema de Lorenz. Usamos los siguientes valores para los parámetros del sistema: $\sigma = 10$, $\rho = \frac{8}{3}$, $\beta = 28$. 
+\begin{center}
+ \includegraphics{funciones.png}
+\end{center}
 
 Después introducimos una función que realice los cálculos del método RK4. Esta función toma como argumentos las variables $x_0$, $y_0$, y $z_0$ en un tiempo $t_i$ y usa un $\Delta t = 10^{-4}$ y las tres funciones de las ecuaciones para aproximar los valores del sistema en el tiempo $t_{i+1} = t_i + \Delta t$. La función finaliza modificando los valores $x_0$, $y_0$, y $z_0$ de la estructura por los calculados con el método RK4.
 
-Finalmente, usamos la función \textit{main} para asignar los valores de las condiciones iniciales a las variables de la estructura. Luego iteramos la función RK4 desde $t = 0$ a $t = 50$, imprimiendo a cada paso los resultados de $x_0$, $y_0$, y $z_0$.
+Finalmente, usamos la función \textit{main} para asignar los valores de las condiciones iniciales a las variables de la estructura. Luego iteramos la función RK4 desde $t = 0$ a $t = 50$, imprimiendo a cada paso los resultados de $x_0$, $y_0$, y $z_0$. Estos datos son guardados en un archivo de texto para ser graficados usando \textbf{Gnuplot}.
+
+Para obtener los datos para graficar las proyecciones sobre los tres planos $XY$, $XZ$ y $YZ$, y la gráfica de $Y$ en funci\'on de $t$, usamos el mismo programa modificando \'unicamente la \'ultima l\'inea del ciclo \textit{for} para que imprima s\'olo los valores necesarios ($X$ y $Y$, $X$ y $Z$, $Y$ y $Z$, y $t$ y $Y$, respectivamente):
+
+
+\section*{Graficar los resultados}
+
+\justify
+Al graficar los resultados en \textbf{Gnuplot}, s\'olo se usaron uno de cada 10 datos para que la talla de los archivos no fuera demasiado grande. Usamos el siguiente c\'odigo para generar los pdf:
+
+Obtuvimos la siguiente "Mariposa de Lorenz":
+%\begin{center}
+%\includepdf[width=\textwidth]{lorenz.pdf}
+%\end{center}
+
+Para visualizar mejor la forma tridimensional de la "\textit{mariposa}", usamos la terminal de \textit{gif} de Gnuplot para animar la rotaci\'on sobre el eje $z$ de la gr\'afica (ver "mariposa.gif" en el repositorio). Usamos los siguientes comandos de Gnuplot para siular la rotaci\'on:
+
+
 
 \section*{Formatting Citations}
 
