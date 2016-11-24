@@ -2,9 +2,12 @@
 
 
 \usepackage{amsmath}
-\usepackage{ragged2e}
-\usepackage{graphicx}
-\usepackage{pdfpages}
+\usepackage{ragged2e} %para justificar el texto
+\usepackage[font=small]{subcaption} %para capcionar subfiguras
+\usepackage{graphicx} %para incluir imágenes
+\usepackage[justification = centering, font=small, labelfont=bf]{caption} %cambia la talla de letra y posicion de las captions
+\usepackage{pdfpages} %para incluir pdf
+\usepackage{float}
 
 \topmargin 0.0cm
 \oddsidemargin 0.2cm
@@ -43,8 +46,10 @@
 {\end{list}}
 
 
-% Include your paper's title here
+
 \begin{document}
+
+
 \large\title{{Sistema de Lorenz}} 
 \author{L.M. Duque Valencia,$^{1}$ L. Del Castillo Detoeuf,$^{2}$ J.F. Reyes Botero$^{3}$}
 \date{}
@@ -92,11 +97,11 @@ Donde $X$ es la velocidad de la corriente de convección, $Y$ es proporcional a 
 \justify
 El programa implementado para aproximar las soluciones del sistema de Lorenz consiste en 5 funciones y una estructura, e imprime los valores sucesivos de $X$, $Y$, y $Z$ cada $10^{-4}$ segundos en un rango de tiempo de 0 a 50. En primer lugar, se declara una estructura con tres variables \textit{double} $x_0$, $y_0$, y $z_0$ que representan los valores de las ecuaciones en un tiempo $t$:\\
 \begin{center}
-\includegraphics{estructura.png}\\
+%\includegraphics[scale = 0.7]{estructura}\\
 \end{center}
  En seguida, implementamos tres funciones \textit{ff, gg} y \textit{hh}, una para cada ecuación diferencial del sistema de Lorenz. Usamos los siguientes valores para los parámetros del sistema: $\sigma = 10$, $\rho = \frac{8}{3}$, $\beta = 28$. 
 \begin{center}
- \includegraphics{funciones.png}
+% \includegraphics[scale=0.7]{funciones.png}
 \end{center}
 
 Después introducimos una función que realice los cálculos del método RK4. Esta función toma como argumentos las variables $x_0$, $y_0$, y $z_0$ en un tiempo $t_i$ y usa un $\Delta t = 10^{-4}$ y las tres funciones de las ecuaciones para aproximar los valores del sistema en el tiempo $t_{i+1} = t_i + \Delta t$. La función finaliza modificando los valores $x_0$, $y_0$, y $z_0$ de la estructura por los calculados con el método RK4.
@@ -112,9 +117,36 @@ Para obtener los datos para graficar las proyecciones sobre los tres planos $XY$
 Al graficar los resultados en \textbf{Gnuplot}, s\'olo se usaron uno de cada 10 datos para que la talla de los archivos no fuera demasiado grande. Usamos el siguiente c\'odigo para generar los pdf:
 
 Obtuvimos la siguiente "Mariposa de Lorenz":
-%\begin{center}
-%\includepdf[width=\textwidth]{lorenz.pdf}
-%\end{center}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.4]{imagenes/mariposa.jpg}
+\caption{Gr\'afica tridimensional de las soluciones del sistema de Lorenz, conocidas como "Mariposa de Lorenz"}
+
+\begin{subfigure}{0.31\textwidth}
+\includegraphics[width=\linewidth ,height = 4cm]{imagenes/xy.jpg}
+\caption{En el plano XY}
+\end{subfigure}
+\begin{subfigure}{0.31\textwidth}
+\includegraphics[width=\linewidth ,height = 4cm]{imagenes/xz.jpg}
+\caption{En el plano XZ}
+\end{subfigure}
+\begin{subfigure}{0.31\textwidth}
+\includegraphics[width=\linewidth ,height = 4cm]{imagenes/yz.jpg}
+\caption{En el plano YZ}
+\end{subfigure}
+\caption{Proyecciones en los tres planos}
+\end{figure}
+
+Podemos tambi\'en observar el comportamiento ca\'otico del sistema graficando las ecuaciones por aparte en funci\'on del tiempo y modificando las condiciones iniciales. 
+
+\begin{figure} [h]
+\centering
+\includegraphics[scale = 0.6]{imagenes/yy.png}
+\caption{Gr\'aficas de Y en funci\'on del tiempo. En negro se tiene la gr\'afica de la soluci\'on de Y usando las mismas condiciones iniciales que para la "Mariposa de Lorenz" ( $X(0) = 0, Y(0) = 1, Z(0) = 0$). En rojo, se tiene la soluci\'on al alterar ligeramente las condiciones iniciales: en este caso, tomamos $Y(0) = 1 + \epsilon$ con $\epsilon = 10^{-6}$. Las dos soluciones son muy similares al inicio, pero alrededor de $t = 30$ comienzan a desviarse y resultan siendo completamente diferentes, lo que muestra el comportamiento ca\'otico del sistema.}
+\end{figure}
+
 
 Para visualizar mejor la forma tridimensional de la "\textit{mariposa}", usamos la terminal de \textit{gif} de Gnuplot para animar la rotaci\'on sobre el eje $z$ de la gr\'afica (ver "mariposa.gif" en el repositorio). Usamos los siguientes comandos de Gnuplot para siular la rotaci\'on:
 
