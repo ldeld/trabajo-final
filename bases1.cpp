@@ -1,17 +1,17 @@
-//primeras bases para el proyecto
 
 #include <iostream>
 #include <cmath>
-#include <sstream>
+
 
 //usamos los siguientes valores: sigma = 10, rho = 28, beta = 8/3
-
 
 struct ecuaciones {
   double x0;
   double y0;
   double z0;
 } ecuacion;
+
+//ecuaciones diferenciales del sistema
 
 double ff(double xx, double yy, double zz) {
   
@@ -31,9 +31,8 @@ double hh(double xx, double yy, double zz) {
 }
 
 //función que calcula valores de rk4
-double rk4(double x0,double y0,double z0) {
+void rk4(double x0, double y0,double z0, double step) {
 
-  double step = 0.0001;  //esto es el delta-t
   double k0 = step * ff(x0, y0, z0);
   double l0 = step * gg(x0, y0, z0);
   double m0 = step * hh(x0, y0, z0);
@@ -56,14 +55,27 @@ double rk4(double x0,double y0,double z0) {
 
 
 int main(void) {
-
+  //para modificar las condiciones iniciales, descomentar "+pow(10, 6)"
+  
   ecuacion.x0 = 0;
-  ecuacion.y0 = 1;
+  ecuacion.y0 = 1 //+pow(10, -6);
   ecuacion.z0 = 0;
 
-  for (int i = 0; i <= 500000; ++i) {
-    rk4(ecuacion.x0, ecuacion.y0, ecuacion.z0);
-    std::cout<< ecuacion.x0 << "\t" << ecuacion.y0 <<"\t"<< ecuacion.z0 <<"\n";
+  double step = 0.0001;
+  
+  for (double t=0 ; t < 50; t+=step) {
+    rk4(ecuacion.x0, ecuacion.y0, ecuacion.z0, step);
+    std::cout<< ecuacion.x0 << "\t" << ecuacion.y0 << ecuacion.z0 << "\n";
+
+    //para imprimir datos de los planos (descomentar sólo una de las líneas):
+    
+    //std::cout << ecuacion.x0 << "\t" << ecuacion.y0 << "\n";
+    //std::cout << ecuacion.x0 << "\t" << ecuacion.z0 << "\n";
+    //std::cout << ecuacion.y0 << "\t" << ecuacion.z0 << "\n";
+
+    //para imprimir Y en función de t
+    
+    //std::cout << t << "\t" << ecuacion.y0 << "\n"; 
   }  
 
   return 0;
