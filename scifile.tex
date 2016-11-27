@@ -114,7 +114,15 @@ El sistema se expresa de la siguiente forma:
 \dot{Y} = X(\rho - Z)\\
 \dot{Z} = XY - \beta Z
 \end{align}
-Donde $X$ es la velocidad de la corriente de convecci\'on, $Y$ es proporcional a la diferencia de temperatura entre  corrientes de convecci\'on ascendetes y descendentes y $Z$ es la desviaci\'on de la temperaratura respecto a la dependencia lineal de la altura. Este sistema es de gran inter\'es matem\'atico pues para ciertos valores de los par\'ametros muestra un comportamiento ca\'otico con un atractor conocido como "\textit{Mariposa de Lorenz}". 
+Donde $X$ es la velocidad de la corriente de convecci\'on, $Y$ es proporcional a la diferencia de temperatura entre  corrientes de convecci\'on ascendetes y descendentes y $Z$ es la desviaci\'on de la temperaratura respecto a la dependencia lineal de la altura. Este sistema es de gran inter\'es matem\'atico pues para ciertos valores de los par\'ametros muestra un comportamiento ca\'otico con un atractor conocido como "\textit{Mariposa de Lorenz}".\\
+Para resolver este sistema de ecuaciones diferenciales, se utiliza el método de "\textit{Runge-Kutta 4}", el cual consiste en obtener la soluci\'on del problema inicial planteado, por medio de la aproximaci\'on en cada punto de la malla, bas\'andose en el resultado obtenido para el punto anterior. Teniendo como problema inicialpor ejemplo:
+\begin{align}
+  \frac{dy}{dt} = f(t,y)  &  t_0 < t < t_n\\
+  y(0) = "\textit{c}"
+\end{align}
+Donde la malla está determinada por {t_0, t_1,... , t_n} de paso $h$, pasa obtener un resultado aproximado en estos puntos. \\
+El método de RK4 es una generalizaci\'on de la f\'ormula b\'asica de Euler $y_{i+1} = y_i + h f(t_i, y_i)$, en los que los valores de f se reemplazan por un promedio ponderado de f en $t_i < t < t_{i+1}$; donde el orden del m\'etodo es la cantidad de t\'erminos que se usan en el promedio ponderado, en este caso será de orden 4.
+
 
 
 \section*{Programaci\'on}
@@ -267,6 +275,11 @@ more> }
 gnuplot> set output
 \end{lstlisting}
 
+
+\section*{Conlusiones}
+
+\justify
+Se diseñ\'o y desarroll\'o un programa en lenguaje C++ para resolver el sistema de Lorenz con las condiciones iniciales dadas. El programa fue escrito en el editor de texto "\textit{Emacs}" y compilado con "\textit{g++}", con la implementaci\'on de una estrucutura para el valor de las condiciones inciales, y el cual itera a través del método RK4, para la soluci\'on de un sistema de ecuaciones diferenciales, de 1 a 50 con un intervalo de $10^{-4}$. Una vez obtenidos las aproximaciones num\'ericas del sistema, se realiz\'o una gr\'afica por medio del programa "\textit{Gnuplot}", imprimiendo cada 10 datos, es decir 50000 datos en total, para que el progrma no se saturara de informaci\'on y pudiese correr de manera eficiente; para cada gr\'afica se tomaron los datos necesarios: gr\'afica tridimensional $x$ vs $y$ vs $z$ y  planos $x$ vs $y$, $x$ vs $z$, $y$ vs $z$. Luego, se grafic\'o el mismo sistema incial pero con una ligera modificaci\'on en una de las condiciones iniciales, tomado en este caso $Y(0)$, y con la gr\'afica de este respecto al tiempo $t$ se puede observar que con una mínima alteraci\'on en las condiciones inciales el sistema puede cambiar su comportamiento en una diferencia bastante notable, mostrando as\'i el comportamiento ca\'otico caracter\'istico del sistema. Adicionalmente, para complementar el trabajo realizado, por medio de "\textit{Gnuplot}" se implement\'o la rotaci\'on de la gráfica tridimensional sobre el eje $z$  obtenida anteriormente a manera de "\textit{gif}".
 
 
 \section*{Formatting Citations}
@@ -462,6 +475,7 @@ What you should send to {\it Science\/} will depend on the stage your manuscript
 
 
 
+
 % Following is a new environment, {scilastnote}, that's defined in the
 % preamble and that allows authors to add a reference at the end of the
 % list that's not signaled in the text; such references are used in
@@ -505,15 +519,6 @@ be submitted separately.
 
 
 \end{document}
-
-
-
-
-
-
-
-
-
 
 
 
